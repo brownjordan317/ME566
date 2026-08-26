@@ -2,22 +2,23 @@ import numpy as np
 import cv2
 import os
 
-from chessboard_grid_size_detector import GridDetector
-from chessboard_detector import ChessboardDetector
-from image_reader import ImageReader
+from src.calibration.chessboard_grid_size_detector import GridDetector
+from src.calibration.chessboard_detector import ChessboardDetector
+from src.io.image_reader import ImageReader
 
 
 class CameraCalibrator:
     def __init__(
         self,
-        image_dir,
-        chessboard_size=None,
-        square_size=None,
+        images = None,
+        image_dir=None,
+        chessboard_size=None, # form (10, 7)
+        square_size=None, # in millimeters
     ):
-        self.images = ImageReader(image_dir).images
-
-        if not self.images:
-            raise ValueError("No calibration images found.")
+        if images is not None:
+            self.images = images
+        elif image_dir is not None:
+            self.images = ImageReader(image_dir).images
 
         if square_size is None or square_size <= 0:
             raise ValueError("square_size must be greater than 0.")
@@ -62,7 +63,7 @@ class CameraCalibrator:
                 self.objpoints.append(objp.copy())
                 self.imgpoints.append(corners)
 
-        if len(self.objpoints) < 3:
+        if len(self.objpoints) < 2:
             raise RuntimeError(
                 f"Only {len(self.objpoints)} usable calibration images found."
             )
@@ -97,7 +98,10 @@ class CameraCalibrator:
         if not filename.endswith(".npz"):
             raise ValueError("Filename must have a .npz extension.")
         
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        directory = os.path.dirname(filename)
+
+        if directory:
+            os.makedirs(directory, exist_ok=True)
 
         np.savez(
             filename,
@@ -128,12 +132,10 @@ class CameraCalibrator:
                 self.dist_coeffs,
             )
 
-            error = cv2.norm(
-                imgpoints,
-                projected,
-                cv2.NORM_L2,
-            ) / len(projected)
+            imgpoints = np.asarray(imgpoints, dtype=np.float32).reshape(-1, 2)
+            projected = projected.reshape(-1, 2)
 
+            error = cv2.norm(imgpoints, projected, cv2.NORM_L2) / len(projected)
             errors.append(error)
 
         return {

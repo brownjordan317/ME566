@@ -56,3 +56,13 @@ class ImageCapture:
 
         self.cap.release()
         cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    camera_path = "rtsp://192.168.1.10:8080/h264_opus.sdp"
+    save_path = "images/calibration_set"
+    extension = ".jpg"
+    capture_rate = 5  # Capture every 5 frames
+
+    image_capture = ImageCapture(camera_path, save_path, extension, capture_rate)
+    image_capture.io()
