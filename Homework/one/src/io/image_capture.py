@@ -59,8 +59,8 @@ class ImageCapture:
 
 
 if __name__ == "__main__":
-    camera_path = "rtsp://192.168.1.10:8080/h264_opus.sdp"
-    save_path = "images/calibration_set"
+    camera_path = "/dev/video2"
+    save_path = "images/calibration_set_me566_1"
     extension = ".jpg"
     capture_rate = 5  # Capture every 5 frames
 

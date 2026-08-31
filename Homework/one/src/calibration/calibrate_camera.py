@@ -1,3 +1,4 @@
+import json
 import numpy as np
 import cv2
 import os
@@ -95,22 +96,24 @@ class CameraCalibrator:
         if self.camera_matrix is None or self.dist_coeffs is None:
             raise RuntimeError("Camera has not been calibrated yet.")
         
-        if not filename.endswith(".npz"):
-            raise ValueError("Filename must have a .npz extension.")
+        if not filename.endswith(".json"):
+            raise ValueError("Filename must have a .json extension.")
         
         directory = os.path.dirname(filename)
 
         if directory:
             os.makedirs(directory, exist_ok=True)
 
-        np.savez(
-            filename,
-            camera_matrix=self.camera_matrix,
-            dist_coeffs=self.dist_coeffs,
-            rvecs=self.rvecs,
-            tvecs=self.tvecs,
-            rms_error=self.rms_error,
-        )
+        calibration = {
+            "camera_matrix": self.camera_matrix.tolist(),
+            "dist_coeffs": self.dist_coeffs.tolist(),
+            "rvecs": [rvec.tolist() for rvec in self.rvecs],
+            "tvecs": [tvec.tolist() for tvec in self.tvecs],
+            "rms_error": float(self.rms_error),
+        }
+
+        with open(filename, "w", encoding="utf-8") as calibration_file:
+            json.dump(calibration, calibration_file, indent=2)
 
     def reprojection_error(self):
         if self.camera_matrix is None:
