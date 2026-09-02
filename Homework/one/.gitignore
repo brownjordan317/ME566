@@ -1,6 +1,6 @@
 images/
 outputs/
-callibration_matrices/
+report_assets/
 Homework_1.pdf
 __pycache__/
 *.pyc
