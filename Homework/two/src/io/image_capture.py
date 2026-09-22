@@ -60,7 +60,7 @@ class ImageCapture:
 
 if __name__ == "__main__":
     camera_path = "/dev/video0"
-    save_path = "Homework/two/images/hw2_rot_images"
+    save_path = "Homework/two/images/hw2_translation_images"
     extension = ".jpg"
     capture_rate = 5  # Capture every 5 frames
 
