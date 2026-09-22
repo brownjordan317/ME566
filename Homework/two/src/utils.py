@@ -3,6 +3,7 @@
 import cv2
 import numpy as np
 
+
 from src.io.image_reader import ImageReader
 
 
