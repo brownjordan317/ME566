@@ -1,6 +1,10 @@
 images/
+*.zip
 outputs/
 report_assets/
 __pycache__/
 *.pyc
 .vscode/
+Homework 2.pdf
+build_report.py
+report_metrics.py
