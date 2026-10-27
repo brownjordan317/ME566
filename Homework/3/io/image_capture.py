@@ -1,9 +1,10 @@
 import os
+
 import cv2
 
 
-class VidCapture:
-    def __init__(self, camera_path, save_path, extension=".mp4", capture_rate=5):
+class ImageCapture:
+    def __init__(self, camera_path, save_path, extension=".jpg", capture_rate=5):
         # camera path can be an integer (for webcam) or an RTSP stream URL
         self.camera_path = camera_path
         self.save_path = save_path
@@ -16,7 +17,7 @@ class VidCapture:
         self.capture_rate = capture_rate
 
     def check_extension(self):
-        valid_extensions = [".mp4", ".avi", ".mov", ".mkv"]
+        valid_extensions = [".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".tif"]
         if self.extension.lower() not in valid_extensions:
             raise ValueError(
                 f"Invalid extension: {self.extension}. Valid extensions are: {valid_extensions}"
@@ -56,3 +57,13 @@ class VidCapture:
 
         self.cap.release()
         cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    camera_path = "rtsp://scanner.local:8554/cam_2"  # Replace with your RTSP stream URL or webcam index
+    save_path = "room_scan"
+    extension = ".jpg"
+    capture_rate = 5  # Capture every 5 frames
+
+    image_capture = ImageCapture(camera_path, save_path, extension, capture_rate)
+    image_capture.io()
