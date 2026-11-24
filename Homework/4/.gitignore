@@ -1,0 +1,34 @@
+__pycache__/
+outputs/
+
+# Python and notebook caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Generated run outputs
+/outputs/
+
+# LaTeX build intermediates (keep report source and PDF)
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+
+# Local capture images and archive; keep capture documentation
+/hw4_captures/*
+!/hw4_captures/README.md
+!/hw4_captures/readme.me
+/hw4_captures.zip
+
+# Generated numerical arrays
+/latex/pose_covariance.npz

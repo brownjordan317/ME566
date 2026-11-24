@@ -1,0 +1,26 @@
+# Python and notebook caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Generated run outputs
+/outputs/
+
+# LaTeX build intermediates (keep report source and PDF)
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+
+# Local phone recordings and archive
+/jordans_phone_vids/
+/jordans_phone_vids.zip
